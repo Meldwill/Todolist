@@ -16,11 +16,11 @@ function App() {
         { id: 1, title: 'Hello world', isDone: true },
         { id: 2, title: 'I am Happy', isDone: false },
         { id: 3, title: 'Yo', isDone: false },
-
+    ]
     return (
         <div className="app">
-            <Todolist truck={truck1} task={tasks1}/>
-            <Todolist truck={truck2} task={tasks2}/>
+            <Todolist truck={truck1} tasks={tasks1}/>
+            <Todolist truck={truck2} tasks={tasks2}/>
         </div>
     )
 }
