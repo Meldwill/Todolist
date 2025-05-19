@@ -1,3 +1,5 @@
+import {Task} from "./Task.tsx";
+
 type TodolistProps = {
     truck: string
     tasks: TaskProps[]
@@ -11,6 +13,13 @@ type TaskProps = {
 
 export const Todolist = ({truck, tasks}: TodolistProps) => {
 
+    const mappedTasks = tasks.map((el: TaskProps, index) => {
+        debugger
+        return (
+            <Task key={index} title={el.title} isDone={el.isDone}/>
+        )
+    })
+
     return (
         <div>
             <h3>{truck}</h3>
@@ -19,14 +28,7 @@ export const Todolist = ({truck, tasks}: TodolistProps) => {
                 <button>+</button>
             </div>
             <ul>
-                {tasks.map((el: TaskProps) => {
-
-                    return (
-                        <li>
-                            <input type="checkbox" checked={el.isDone}/> <span>{el.title}</span>
-                        </li>
-                    )
-                })}
+                {mappedTasks}
             </ul>
             <div>
                 <button>All</button>
