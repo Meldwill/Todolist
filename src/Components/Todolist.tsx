@@ -1,4 +1,5 @@
 import {Task} from "./Task.tsx";
+import {Button} from "./Button.tsx";
 
 type TodolistProps = {
     truck: string
@@ -13,10 +14,12 @@ type TaskProps = {
 
 export const Todolist = ({truck, tasks}: TodolistProps) => {
 
-    const mappedTasks = tasks.map((el: TaskProps, index) => {
+    const mappedTasks = tasks.map((el: TaskProps) => {
         debugger
         return (
-            <Task key={index} title={el.title} isDone={el.isDone}/>
+            <Task key={el.id}
+                  title={el.title}
+                  isDone={el.isDone}/>
         )
     })
 
@@ -31,9 +34,9 @@ export const Todolist = ({truck, tasks}: TodolistProps) => {
                 {mappedTasks}
             </ul>
             <div>
-                <button>All</button>
-                <button>Active</button>
-                <button>Completed</button>
+                <Button title={"All"} />
+                <Button title={"Active"} />
+                <Button title={"Completed"} />
             </div>
         </div>
     );
