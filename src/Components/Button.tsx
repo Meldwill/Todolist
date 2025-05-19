@@ -3,8 +3,6 @@ type Props = {
 };
 export const Button = ({title}: Props) => {
     return (
-        <div>
             <button>{title}</button>
-        </div>
     );
 };
