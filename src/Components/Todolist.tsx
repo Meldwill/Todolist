@@ -1,9 +1,6 @@
-import {Task} from "./Task.tsx";
-import {Button} from "./Button.tsx";
-
 type TodolistProps = {
     truck: string
-    tasks: TaskProps[]
+    task: TaskProps[]
 }
 
 type TaskProps = {
@@ -12,32 +9,31 @@ type TaskProps = {
     isDone: boolean
 }
 
-export const Todolist = ({truck, tasks}: TodolistProps) => {
-
-    const mappedTasks = tasks.map((el: TaskProps) => {
-        debugger
-        return (
-            <Task key={el.id}
-                  title={el.title}
-                  isDone={el.isDone}/>
-        )
-    })
+export const Todolist = ({truck}: TodolistProps) => {
 
     return (
-        <div>
-            <h3>{truck}</h3>
             <div>
-                <input/>
-                <button>+</button>
+                <h3>{truck}</h3>
+                <div>
+                    <input/>
+                    <button>+</button>
+                </div>
+                <ul>
+                    <li>
+                        <input type="checkbox" checked={true}/> <span>HTML&CSS</span>
+                    </li>
+                    <li>
+                        <input type="checkbox" checked={true}/> <span>JS</span>
+                    </li>
+                    <li>
+                        <input type="checkbox" checked={false}/> <span>React</span>
+                    </li>
+                </ul>
+                <div>
+                    <button>All</button>
+                    <button>Active</button>
+                    <button>Completed</button>
+                </div>
             </div>
-            <ul>
-                {mappedTasks}
-            </ul>
-            <div>
-                <Button title={"All"} />
-                <Button title={"Active"} />
-                <Button title={"Completed"} />
-            </div>
-        </div>
     );
 };
