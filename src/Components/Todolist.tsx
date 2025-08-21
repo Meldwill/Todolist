@@ -1,39 +1,47 @@
-type TodolistProps = {
-    truck: string
-    task: TaskProps[]
-}
 
-type TaskProps = {
-    id: number
+import {Button} from './Button'
+import {FilterValueType, TaskType} from "../App.tsx";
+
+
+
+type Props = {
+    removeTasks: (taskId: number) => void
+    changeFilter: (val: FilterValueType) => void
+    tasks: TaskType[]
     title: string
-    isDone: boolean
 }
 
-export const Todolist = ({truck}: TodolistProps) => {
-
+export const Todolist = ({title, tasks, removeTasks, changeFilter}: Props) => {
     return (
+        <div>
+            <h3>{title}</h3>
             <div>
-                <h3>{truck}</h3>
-                <div>
-                    <input/>
-                    <button>+</button>
-                </div>
-                <ul>
-                    <li>
-                        <input type="checkbox" checked={true}/> <span>HTML&CSS</span>
-                    </li>
-                    <li>
-                        <input type="checkbox" checked={true}/> <span>JS</span>
-                    </li>
-                    <li>
-                        <input type="checkbox" checked={false}/> <span>React</span>
-                    </li>
-                </ul>
-                <div>
-                    <button>All</button>
-                    <button>Active</button>
-                    <button>Completed</button>
-                </div>
+                <input/>
+                <Button title={'+'} />
             </div>
-    );
-};
+            {tasks.length === 0 ? (
+                <p>Тасок нет</p>
+            ) : (
+                <ul>
+                    {tasks.map(task => {
+                        return (
+                            <li key={task.id}>
+                                <button onClick={()=> removeTasks(task.id)}>x</button>
+                                <input type="checkbox" checked={task.isDone} />
+                                <span>{task.title}</span>
+                            </li>
+                        )
+                    })}
+                </ul>
+            )}
+            <div>
+                <button onClick={()=> changeFilter('All')}>All</button>
+                <button onClick={()=> changeFilter('Active')}>Active</button>
+                <button onClick={()=> changeFilter('Completed')}>Completed</button>
+                {/*<Button title={'All'} />*/}
+                {/*<Button title={'Active'} />*/}
+                {/*<Button title={'Completed'} />*/}
+            </div>
+        </div>
+    )
+}

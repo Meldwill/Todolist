@@ -1,26 +1,54 @@
 import './App.css'
 import {Todolist} from "./Components/Todolist.tsx";
+import {useState} from "react";
+
+
+export type TaskType = {
+    id: number
+    title: string
+    isDone: boolean
+}
+
+export type FilterValueType = "All" | "Active" | "Completed"
 
 function App() {
 
-    const truck1 = "What to learn-1"
-    const truck2 = "What to learn-2"
+    // let tasks: TaskType[] = [
+    //     { id: 1, title: 'HTML&CSS', isDone: true },
+    //     { id: 2, title: 'JS', isDone: true },
+    //     { id: 3, title: 'ReactJS', isDone: false },
+    //     { id: 4, title: 'Redux', isDone: false },
+    //     { id: 5, title: 'Typescript', isDone: false },
+    //     { id: 6, title: 'RTK query', isDone: false },
+    // ]
 
-    const tasks1 = [
-        { id: 1, title: 'HTML&CSS', isDone: true },
-        { id: 2, title: 'JS', isDone: true },
-        { id: 3, title: 'ReactJS', isDone: false },
-    ]
+    let [tasks, setTasks] = useState<Array<TaskType>>([
+        {id: 1, title: 'HTML&CSS', isDone: true},
+        {id: 2, title: 'JS', isDone: true},
+        {id: 3, title: 'ReactJS', isDone: false},
+        {id: 4, title: 'Redux', isDone: false},
+        {id: 5, title: 'Typescript', isDone: false},
+        {id: 6, title: 'RTK query', isDone: false},
+    ])
 
-    const tasks2 = [
-        { id: 1, title: 'Hello world', isDone: true },
-        { id: 2, title: 'I am Happy', isDone: false },
-        { id: 3, title: 'Yo', isDone: false },
-    ]
+
+    const removeTasks = (taskId: number) => {
+        setTasks(tasks.filter(t => t.id !== taskId))
+    }
+
+    const changeFilter = (val: FilterValueType) => {
+        console.log(val)
+    }
+
+
     return (
         <div className="app">
-            <Todolist truck={truck1} tasks={tasks1}/>
-            <Todolist truck={truck2} tasks={tasks2}/>
+            <Todolist title="What to learn"
+                      tasks={tasks}
+                      removeTasks={removeTasks}
+                      changeFilter={changeFilter}
+            />
+
         </div>
     )
 }
