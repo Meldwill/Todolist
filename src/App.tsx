@@ -1,6 +1,7 @@
 import './App.css'
-import {Todolist} from "./Components/Todolist.tsx";
+import  {Todolist} from "./Components/Todolist.tsx";
 import {useState} from "react";
+
 
 
 export type TaskType = {
@@ -31,23 +32,38 @@ function App() {
         {id: 6, title: 'RTK query', isDone: false},
     ])
 
+    const [valueForDrushlag, setValueForDrushlag] = useState<FilterValueType>('All')
+
 
     const removeTasks = (taskId: number) => {
         setTasks(tasks.filter(t => t.id !== taskId))
     }
 
-    const changeFilter = (val: FilterValueType) => {
-        console.log(val)
+    const drushlagFoo = () => {
+        switch (valueForDrushlag) {
+            case 'Completed': {
+                return tasks.filter(el => el.isDone === true)
+            }
+
+            case 'Active': {
+                return tasks.filter(el => !el.isDone === true)
+            }
+            default:
+                return tasks
+        }
     }
+
+    let drushlagVal = drushlagFoo()
 
 
     return (
         <div className="app">
             <Todolist title="What to learn"
-                      tasks={tasks}
+                      tasks={drushlagVal}
                       removeTasks={removeTasks}
-                      changeFilter={changeFilter}
+                      changeFilter={setValueForDrushlag}
             />
+
 
         </div>
     )
