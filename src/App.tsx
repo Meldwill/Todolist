@@ -1,11 +1,12 @@
 import './App.css'
 import  {Todolist} from "./Components/Todolist.tsx";
 import {useState} from "react";
+import {v1} from "uuid";
 
 
 
 export type TaskType = {
-    id: number
+    id: string
     title: string
     isDone: boolean
 }
@@ -24,47 +25,50 @@ function App() {
     // ]
 
     let [tasks, setTasks] = useState<Array<TaskType>>([
-        {id: 1, title: 'HTML&CSS', isDone: true},
-        {id: 2, title: 'JS', isDone: true},
-        {id: 3, title: 'ReactJS', isDone: false},
-        {id: 4, title: 'Redux', isDone: false},
-        {id: 5, title: 'Typescript', isDone: false},
-        {id: 6, title: 'RTK query', isDone: false},
+        {id: v1(), title: 'HTML&CSS', isDone: true},
+        {id: v1(), title: 'JS', isDone: true},
+        {id: v1(), title: 'ReactJS', isDone: false},
+        {id: v1(), title: 'Redux', isDone: false},
+        {id: v1(), title: 'Typescript', isDone: false},
+        {id: v1(), title: 'RTK query', isDone: false},
     ])
 
-    const [valueForDrushlag, setValueForDrushlag] = useState<FilterValueType>('All')
+    const [filter, setFilter] = useState<FilterValueType>('All')
 
 
-    const removeTasks = (taskId: number) => {
-        setTasks(tasks.filter(t => t.id !== taskId))
+    const removeTasks = (taskId: string) => {
+        const filteredTasks = tasks.filter((task) => {
+            return task.id !== taskId
+        })
+        setTasks(filteredTasks)
     }
 
-    const drushlagFoo = () => {
-        switch (valueForDrushlag) {
-            case 'Completed': {
-                return tasks.filter(el => el.isDone === true)
-            }
-
-            case 'Active': {
-                return tasks.filter(el => !el.isDone === true)
-            }
-            default:
-                return tasks
-        }
+    const changeFilter = (filter: FilterValueType) => {
+        setFilter(filter)
     }
 
-    let drushlagVal = drushlagFoo()
+    const addTask = (title: string) => {
+        const newTask = {id: v1(), title, isDone: true}
+        setTasks([newTask, ...tasks])
+    }
 
+    let taskForTodolist = tasks
+    if(filter === "Active") {
+        taskForTodolist = tasks.filter(task => !task.isDone)
+    }
+
+    if(filter === "Completed") {
+        taskForTodolist = tasks.filter(task => task.isDone)
+    }
 
     return (
         <div className="app">
             <Todolist title="What to learn"
-                      tasks={drushlagVal}
+                      tasks={taskForTodolist}
                       removeTasks={removeTasks}
-                      changeFilter={setValueForDrushlag}
+                      changeFilter={changeFilter}
+                      addTask={addTask}
             />
-
-
         </div>
     )
 }
